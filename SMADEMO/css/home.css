@@ -1,0 +1,76 @@
+/**
+ * ============================================================================
+ * home.css -- This handles the homepage layout.
+ * ============================================================================
+**/
+
+/* layout z-axis of page */
+html {
+    z-index: 5;
+    margin: 0;
+}
+
+body {
+    z-index: 6;
+    margin: 0;
+    height: 100%;
+    overflow: hidden;
+}
+
+/* search bar under the title */
+.search-bar-2 {
+    display: inline-block;
+    width: 65%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* things in the circle container */
+.circle-container {
+    z-index: 2;
+    width: 33%;
+}
+
+/* builds & places the circle */
+.circle {
+    z-index: 1;
+    position: absolute;
+    top: -50vh;
+    right: 33vw;
+    height: 200vh;
+    width: 100vw;
+    border-radius: 50%;
+}
+
+/* handles the title formatting */
+.title {
+    position: relative;
+    margin-bottom: 3%;
+    font-family: Cambria, 'Times New Roman', Georgia, Arial, Times, sans-serif;
+}
+
+.subtitle {
+    position: relative;
+    margin-bottom: 3%;
+}
+
+/* placing something in the center */
+.vertical-center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    margin-left: 50%;
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}

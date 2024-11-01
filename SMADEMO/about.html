@@ -1,0 +1,79 @@
+{{ define "about" }}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>About - Stock Market Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen">
+    <link rel="stylesheet" href="/css/colors.css">
+    <link rel="stylesheet" href="/css/info.css">
+</head>
+
+<body class="bg-main" onload="navByEnter()">
+    <div id="navbar-parent"></div>
+
+    <!-- start of info-container -->
+    <div class="container bg-info info-container">
+        <h2 class="text-center">About</h2>
+        <hr>
+        <div>
+            <h3>Project Description</h3>
+            <p></p>
+            <p>
+                The goal of this project was to create a tool for analyzing the stock market. The goal was to
+                include the ability to not only check the price of stocks across stock exchanges, but also to
+                facilitate the use of technical analysis tools to allow users to analyze the markets using their
+                own judgement. In addition, the StockPicker element was built to help identify strong or weak stocks.
+                The hope is to further the algorithm with machine learning or artificial intelligence to provide
+                better analysis of stocks and the market itself. <br><br>
+                This project was written for the ASU Capstone I and II classes.
+            </p>
+        </div>
+        <hr>
+        <div>
+            <h3>Programmers</h3>
+            <p>Backend work:</p>
+            <ul>
+                <li>Gianni Vaiente</li>
+                <li>Jasmine Nguyen</li>
+                <li>Simran Bhalla</li>
+            </ul>
+            <p> Frontend work: </p>
+            <ul>
+                <li>Jeremy Pellerino</li>
+            </ul>
+        </div>
+        <hr>
+        <div>
+            <h3>Resources used</h3>
+            <p>This project used several external resources to deliver a complete product</p>
+            <p>Resources</p>
+            <ul>
+                <li><a class="inline-link" href="https://www.alphavantage.co/">AlphaVantage</a> -- Used for fundamental data.</li>
+                <li><a class="inline-link" href="https://finnhub.io/">FinnHub</a> -- Used for quote data.</li>
+                <li><a class="inline-link" href="https://www.mongodb.com/">MongoDB</a> -- For the database.</li>
+                <li><a class="inline-link" href="https://d3js.org/">D3.js</a> -- For data visualization.</li>
+            </ul>
+        </div>
+        <hr>
+        <div>
+            <h3>Disclaimer</h3>
+            <p>Understandably, it would seem this site is providing investment advice.</p>
+            <p>This is not investment advice. It is merely a university project.</p>
+        </div>
+    </div>
+    <!-- end of info-container -->
+
+    <!-- scripts -->
+    <script src="js/navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+   
+</body>
+
+</html>
+{{ end }}

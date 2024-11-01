@@ -1,0 +1,141 @@
+/**
+ * ============================================================================
+ * chart.css -- This handles the chart page layout
+ * ============================================================================
+**/
+
+/***** GENERAL CSS *****/
+/* center tables */
+table {
+    margin: auto;
+    padding: auto;
+    table-layout: auto;
+}
+
+/***** CHART TAB *****/
+.boll-line {
+    fill: none;
+    stroke: rgb(231, 97, 44);
+    stroke-width: 1.5px;
+}
+
+.boll-mid {
+    fill: none;
+    stroke: rgb(219, 231, 44);
+    stroke-width: 1.5px;
+}
+
+/* this shouldn't be applied anywhere, it is just 
+ testing the colors of the gradient set in summary.js and stockchart.js */
+ .chart-gradient-placeholder {
+    color: rgba(56, 56, 236, 0.74);
+    color: rgba(43, 93, 230, 0.219)
+}
+
+/* for line of data points for the chart */
+.data-line, .data-line-s {
+    fill: none;
+    stroke: rgb(44, 172, 231);
+    stroke-width: 1.5px;
+}
+
+/* for the tooltip vertical line */
+.dotted, .dotted-s {
+    stroke-width: 1.5px;
+    stroke: black;
+    width: .5px;
+}
+
+/* exponential moving average line */
+.ema-line {
+    fill: none;
+    stroke: rgb(162, 44, 231);
+    stroke-width: 1.5px;
+}
+
+.macd-line {
+    fill: none;
+    stroke: rgb(231, 166, 44);
+    stroke-width: 1px;
+}
+
+.macd-signal {
+    fill: none;
+    stroke: rgb(44, 88, 231);
+    stroke-width: 1px;
+}
+
+/* for the tooltip overlay rectangle */
+.overlay, .overlay-s {
+    fill: none;
+    pointer-events: all;
+}
+
+/* the path itself */
+path {
+    z-index: 4;
+    position: absolute;
+}
+
+/* for the rsi line */
+.rsi-line {
+    fill: none;
+    stroke: steelblue;
+    stroke-width: 1px;
+}
+
+/* for signal lines (technical indicators) */
+.signal-line {
+    fill: none;
+    stroke: rgb(172, 172, 172);
+    stroke-width: 1.5px;
+    opacity: 0.5;
+}
+
+/* for the main svg class */
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 85%;
+    vertical-align: top;
+    overflow: hidden;
+}
+
+/* for the summary svg class */
+.svg-container-s {
+    display: inline-block;
+    position: relative;
+    width: 85%;
+    vertical-align: top;
+    overflow: hidden;
+}
+
+/* for the responsive svg class */
+.svg-content-responsive {
+    display: inline-block;
+    position: absolute;
+    top: 10px;
+    left: 0;
+}
+
+/* for the tooltip circle */
+.tooltip-circle, .tooltip-circle-s {
+    stroke: black;
+    fill: white;
+    stroke-width: 2px;
+}
+
+.x-axis, .x-axis line, .x-axis path {
+    stroke: whitesmoke;
+}
+
+.y-axis, .y-axis line, .y-axis path {
+    stroke: whitesmoke;
+}
+
+/***** STATISTIC TAB *****/
+/* for the grid of key statistic data */
+.extra-room {
+    margin: 10px;
+    padding: 10px;
+}

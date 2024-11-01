@@ -1,0 +1,63 @@
+{{ define "explore" }}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Explore - Stock Market Analyzer</title>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen">
+    <link rel="stylesheet" href="/css/colors.css">
+    <link rel="stylesheet" href="/css/info.css">
+</head>
+
+<body class="bg-main" onload="exploremaster()">
+    <div id="navbar-parent"></div>
+    <div class="container bg-info info-container">
+        <h2 class="text-center">Explore the Markets</h2>
+        <hr>
+        <!-- start of tab headers -->
+        <ul class='nav nav-tabs text-center' id='myTab' role='tablist'>
+            <!-- picks header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link active' href='#picks' id='picks' data-bs-toggle='tab' data-bs-target='#picks-content'
+                    type='button' role='tab' aria-controls='picks' aria-selected='true'>StockPicker Picks</button>
+            </li>
+            <!-- gainers header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link' href='#gainers' id='gainers' data-bs-toggle='tab' data-bs-target='#gainers-content'
+                    type='button' role='tab' aria-controls='gainers' aria-selected='false'>Top Gainers</button>
+            </li>
+        </ul>
+        <!-- end of tab headers -->
+        
+        <!-- start of tab content -->
+        <div class='tab-content'>
+            <!-- picks tab -->
+            <div class='tab-pane fade text-center show active' id='picks-content' role='tabpanel'>
+                <table class="table js-sort-table text-color" id="picks-table"></table>
+            </div>
+            
+            <!-- movers tab -->
+            <div class='tab-pane fade text-center' id='gainers-content' role='tabpanel'>
+                <table class="table js-sort-table text-color" id="gainers-table"></table>
+            </div>
+        </div>
+    </div>
+
+    <!-- scripts -->
+    <script src="/js/sorttable/sort-table.min.js"></script>
+    <script src="/js/master.js"></script>
+    <script src="/js/navbar.js"></script>
+    <script src="/js/explore.js"></script>
+    <script src="/js/linker.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{{ end }}

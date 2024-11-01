@@ -1,0 +1,62 @@
+/**
+ * ============================================================================
+ * info.css -- This handles informational layouts like the getting started 
+ *             about, or stock picker pages.
+ * ============================================================================
+**/
+
+/* ensure the html & body are visible */
+html, body {
+    z-index: 3;
+    margin: 0;
+}
+
+/* make the navbar on top */
+.navbar {
+    z-index: 10;
+}
+
+/* how math equations should be displayed */
+.math-equation {
+    padding: 15px;
+    font-size: 18px;
+}
+
+/* container containing info */
+.info-container {
+    height: auto;
+    padding: 25px;
+}
+
+/* this handles the size of the navbar search bar */
+.search-bar {
+    display: block;
+    width: 15%;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+/* make sure the content fills the page */
+.extend {
+    height: 100% !important;
+    overflow: hidden;
+}
+
+/* this handles the error image on the 404 page */
+.error {
+    display: block;
+    margin: auto;
+    width: 600px;
+    height: auto;
+}

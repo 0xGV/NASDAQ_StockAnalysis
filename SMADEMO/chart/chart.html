@@ -1,0 +1,292 @@
+{{ define "dchart" }}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <title>{{ .title }} - Stock Market Analyzer</title>
+    <script src='https://d3js.org/d3.v4.min.js'></script>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen">
+    <link rel='stylesheet' href='/css/colors.css'>
+    <link rel='stylesheet' href='/css/chart.css'>
+    <link rel='stylesheet' href='/css/info.css'>
+</head>
+
+<body class='bg-main' onload='chartmaster()'>
+    <div id='navbar-parent'></div>
+
+    <div class='container bg-info info-container'>
+        <div class='text-center'>
+            <br>
+            <h2>{{ .title }}</h2>
+            <h3 id='share_price'></h3>
+        </div>
+        <!-- start of tab headers -->
+        <ul class='nav nav-tabs text-center' id='myTab' role='tablist'>
+            <!-- summary header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link active' href='#summary' id='summary' data-bs-toggle='tab' data-bs-target='#summary-content'
+                    role='tab' aria-controls='summary' aria-selected='true'>Summary</button>
+            </li>
+            <!-- chart tab header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link' href='#chart' id='chart' data-bs-toggle='tab' data-bs-target='#chart-content'
+                    role='tab' aria-controls='chart' aria-selected='false'>Chart</button>
+            </li>
+            <!-- statistics tab header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link' href='#statistics' id='statistics' data-bs-toggle='tab' data-bs-target='#statistics-content'
+                    role='tab' aria-controls='statistics' aria-selected='false'>Statistics</button>
+            </li>
+            <!-- top movers & top picks tab header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link' href='#historical' id='historical' data-bs-toggle='tab' data-bs-target='#historical-content'
+                    role='tab' aria-controls='historical' aria-selected='false'>Historical Data</button>
+            </li>
+        </ul>
+        <!-- end of tab headers -->
+        <!-- start of tab content -->
+        <div class='tab-content'>
+            <!-- summary tab -->
+            <div class='tab-pane fade show active' id='summary-content' role='tabpanel'>
+                <br>
+                <div class='row'>
+                    <div class='col-7'>
+                        <!-- summary graph -->
+                        <div class='bg-info inherit-parent text-center' id='summary-chart'>
+                            <!-- resizing buttons -->
+                            <div class='btn-group'>
+                                <button class='btn btn-outline-sma' id='1month_s'>1M</button>
+                                <button class='btn btn-outline-sma' id='6month_s'>6M</button>
+                                <button class='btn btn-outline-sma' id='ytd_s'>YTD</button>
+                                <button class='btn btn-outline-sma' id='year_s'>1Y</button>
+                                <button class='btn btn-outline-sma' id='5year_s'>5Y</button>
+                                <button class='btn btn-outline-sma' id='max_s'>Max</button>
+                            </div>
+                            <!-- end of resizing buttons -->
+                        </div>
+                        <!-- end of summary graph-->
+                        <!-- tooltips -->
+                        <div class='tooltip-s text-center' id='tooltip-s'>
+                            <div class='tooltip-date-s'>
+                                <span id='date-s'>Hover over the chart to view values!</span> <!-- where the date will go -->
+                            </div>
+                            <div class='tooltip-price-s'>
+                                <span id='price'>Press the buttons to adjust the window!</span> <!-- where the open will go -->
+                            </div>
+                        </div>
+                        <!-- end of tooltips -->
+                    </div>
+                    <!-- end of summary chart -->
+                    <!-- start of summary statistics -->
+                    <div class='col' style="padding-right:50px">
+                        <br>
+                        <h3 class='text-center'> Key Statistics </h3>
+                        <hr>
+                        <table id='summary-table'> </table>
+                    </div>
+                    <!-- end of summary statistics -->
+                </div>
+            </div>
+            <!-- end of summary tab -->
+            <!-- chart tab -->
+            <div class='tab-pane fade text-center' id='chart-content' role='tabpanel'>
+                <br>
+                <!-- info for the stock chart -->
+                <p><i>Use the top chart for zooming in or panning. Drag the edges of the grey box to select a
+                        region. Click outside the grey region to reset the graph!</i></p>
+                <!-- end of info -->
+                <!-- buttons -->
+                <div class='row'>
+                    <!-- stock chart resizing buttons -->
+                    <div class='col'>
+                        <div class='btn-group'>
+                            <button class='btn btn-outline-sma' id='1month'>1M</button>
+                            <button class='btn btn-outline-sma' id='6month'>6M</button>
+                            <button class='btn btn-outline-sma' id='ytd'>YTD</button>
+                            <button class='btn btn-outline-sma' id='year'>1Y</button>
+                            <button class='btn btn-outline-sma' id='5year'>5Y</button>
+                            <button class='btn btn-outline-sma' id='max'>Max</button>
+                        </div>
+                    </div>
+                    <!-- end of resizing buttons -->
+                    <!-- line type button -->
+                    <div class='col'>
+                        <div class='btn btn-outline-sma' id='linetype-toggler'>Candlestick</div>
+                    </div>
+                    <!-- end of line type button -->
+                    <!-- start of technical togglers -->
+                    <div class='col'>
+                        <div class='btn-group' role='group' aria-label='Basic checkbox toggle button group'>
+                            <input type='checkbox' class='btn-check' id='sma-toggler' autocomplete='off' data-checked='false'>
+                            <label class='btn btn-outline-sma' for='sma-toggler'>Simple MA</label>
+
+                            <input type='checkbox' class='btn-check' id='ema-toggler' autocomplete='off' data-checked='false'>
+                            <label class='btn btn-outline-sma' for='ema-toggler'>Exponential MA</label>
+
+                            <input type='checkbox' class='btn-check' id='boll-toggler' autocomplete='off' data-checked='false'>
+                            <label class='btn btn-outline-sma' for='boll-toggler'>Bollinger Bands</label>
+                        </div>
+                    </div>
+                </div>
+                <!-- stock chart -->
+                <div class='bg-info inherit-parent' id='stock_chart'>
+                    <!-- tooltip div -->
+                    <div id='tooltip' class='tooltip'>
+                        <br><br><br>
+                        <div class='tooltip-main'>
+                            <span id='date'></span> <!-- where the date will go -->
+                        </div>
+                        <div class='tooltip-main'>
+                            Open: <span id='open'></span> <!-- where the open will go -->
+                        </div>
+                        <div class='tooltip-main'>
+                            Close: <span id='close'></span> <!-- where the close will go -->
+                        </div>
+                        <div class='tooltip-main'>
+                            Low: <span id='low'></span> <!-- where the low will go -->
+                        </div>
+                        <div class='tooltip-main'>
+                            High: <span id='high'></span> <!-- where the high will go -->
+                        </div>
+                        <br>
+                        <div class='tooltip-main'>
+                            SMA: <span id='sma-tip'></span> <!-- where the high will go -->
+                        </div>
+                        <br>
+                        <div class='tooltip-main'>
+                            EMA: <span id='ema-tip'></span> <!-- where the high will go -->
+                        </div>
+                        <br>
+                        Bollinger Bands
+                        <div class='tooltip-main'>
+                            High: <span id='boll-high-tip'></span> <!-- where the high will go -->
+                        </div>
+                        <div class='tooltip-main'>
+                            Mid: <span id='boll-mid-tip'></span> <!-- where the high will go -->
+                        </div>
+                        <div class='tooltip-main'>
+                            Low: <span id='boll-low-tip'></span> <!-- where the high will go -->
+                        </div>
+                    </div>
+                    <!-- end of tooltip div -->
+                </div>
+                <!-- end of stock chart -->
+                <hr>
+                <!-- start of technical oscillators -->
+                <div>
+                    <div>
+                        <h4 style="text-align: left;">Relative Strength Index (RSI)</h4>
+                        <!-- tooltips -->
+                        <div class='tooltip' id='tooltip-rsi'>
+                            <div>
+                                <span id='rsi-date'>Hover over the chart to view values!</span>
+                            </div>
+                            <div>
+                                RSI: <span id='rsi-rsi'></span>
+                            </div>
+                        </div>
+                        <div class='bg-info inherit-parent text-center' id='rsi-chart'></div>
+                    </div>
+                    <!-- macd -->
+                    <div>
+                        <h4 style="text-align: left;">Moving Average Convergence/Divergence (MACD)</h4>
+                        <!-- tooltips -->
+                        <div id='tooltip-macd' class='tooltip'>
+                            <div>
+                                <span id='macd-date'>Hover over the chart to view values!</span>
+                            </div>
+                            <div>
+                                MACD: <span id='macd-macd'></span>
+                            </div>
+                            <div>
+                                Signal: <span id='macd-signal'></span>
+                            </div>
+                        </div>
+                        <div class='bg-info inherit-parent text-center' id='macd-chart'></div>
+                    </div>
+                </div>
+                <!-- end of technical oscillators -->
+            </div>
+            <!-- end of chart tab -->
+            <!-- statistics tab -->
+            <div class='tab-pane fade' id='statistics-content' role='tabpanel'>
+                <br>
+                <div>
+                    <h3 class='text-center'>Company Description</h3>
+                    <p id='company-description'></p>
+                </div>
+                <div class='row'>
+                    <div class='col'>
+                        <h3 class='text-center'>Financials</h3>
+                        <hr>
+                        <div class='financial-parent'>
+                            <h4>Metadata</h4>
+                            <hr>
+                            <table class='table table-alignment text-color' id='meta'></table>
+                            <br>
+                            <h4>Valuation Metrics</h4>
+                            <hr>
+                            <table class='table table-alignment text-color' id='valuation'></table>
+                            <br>
+                            <h4>Income Data</h4>
+                            <hr>
+                            <table class='table table-alignment text-color' id='income'></table>
+                        </div>
+                    </div>
+                    <div class='col'>
+                        <h3 class='text-center'>Trading Statistics</h3>
+                        <hr>
+                        <div class='trading-parent'>
+                            <h4>Trading Information</h4>
+                            <hr>
+                            <table class='table table-alignment text-color' id='trading'></table>
+                            <br>
+                            <h4>Share Statistics</h4>
+                            <hr>
+                            <table class='table table-alignment text-color' id='share'></table>
+                            <br>
+                            <h4>Dividend & Split Information</h4>
+                            <hr>
+                            <table class='table table-alignment text-color' id='dividend'></table>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+            <!-- end of statistics tab -->
+            <!-- historical data tab -->
+            <div class='tab-pane fade text-center' id='historical-content' role='tabpanel'>
+                <!-- historical data tab headers -->
+                <ul class='nav nav-tabs text-center' id='historicalheaders' role='tablist'></ul>
+                <div id='historicaltabs' class='tab-content'></div>
+            </div>
+            <!-- end of historical tab -->
+        </div>
+        <!-- end of tab content -->
+    </div>
+    <!-- end of info-container -->
+
+    <script>
+        // these will throw errors bc of formatting. it can be ignored.
+        fund = {{ .fundamental }}
+        datas = {{ .data }}
+        tech = {{ .math }}
+    </script>
+    <script src='/js/navbar.js'></script> <!-- for the navbar -->
+    <script src='/js/linker.js'></script> <!-- for linking tabs -->
+    <script src='/chart/js/chartmaster.js'></script> <!-- the page's 'main()' -->
+    <script src='/chart/js/stockchart.js'></script> <!-- for the chart -->
+    <script src='/chart/js/oscillators.js'></script> <!-- for the oscillators -->
+    <script src='/chart/js/statistics.js'></script> <!-- for the key statistics -->
+    <script src='/chart/js/historical.js'></script> <!-- for the historical data -->
+    <script src='/chart/js/summary.js'></script> <!-- for the summary stats -->
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js'></script>
+</body>
+
+</html>
+
+{{ end }}

@@ -1,0 +1,434 @@
+{{ define "learn" }}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Learn - Stock Market Analyzer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen">
+    <link rel="stylesheet" href="/css/colors.css">
+    <link rel="stylesheet" href="/css/info.css">
+</head>
+
+<body class="bg-main" onload="master()">
+    <div id="navbar-parent"></div>
+
+    <!-- start of main content -->
+    <div class="container bg-info info-container">
+        <h2 class="text-center">Learn about the Markets</h2>
+        <hr>
+        <!-- start of tab headers -->
+        <ul class='nav nav-tabs' id='myTab' role='tablist'>
+            <!-- technicals header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link active' href='#technical' id='technical' data-bs-toggle='tab' data-bs-target='#technical-content'
+                    type='button' role='tab' aria-controls='technical' aria-selected='true'>Technical Indicators</button>
+            </li>
+            <!-- fundamentals header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link' href='#fundamental' id='fundamental' data-bs-toggle='tab' data-bs-target='#fundamental-content'
+                    type='button' role='tab' aria-controls='fundamental' aria-selected='false'>Fundamental Data</button>
+            </li>
+            <!-- stock picker header -->
+            <li class='nav-item' role='presentation'>
+                <button class='nav-link' href='#picker' id='stockpicker' data-bs-toggle='tab' data-bs-target='#picker-content'
+                    type='button' role='tab' aria-controls='picker-content' aria-selected='false'>Stock Picker</button>
+            </li>
+        </ul>
+        <!-- end of tab headers -->
+
+        <!-- start of technical indicators tab -->
+        <div class="tab-content">
+            <div class='tab-pane fade show active' id='technical-content' role='tabpanel'>
+                <br>
+                <p><u>Technical Indicator</u>: Some signal based on patterns based on price, volume, and/or interest</p>
+                <p> The following is a list of the technical indicators available on this website. </p>
+                <ul>
+                    <li>
+                        <u>Moving Average (MA)</u>: Calculation that smooths out price action data. This creates
+                        an average price line that can be used to indicate trends.
+                    </li>
+                    <ul>
+                        <li>
+                            <u>Simple Moving Average (SMA)</u>: Uses a basic average with no weights.
+                            If <math><mi>n</mi></math> is the number of periods, 
+                                <math><mi>A</mi></math> is the average in a single period <math><mi>i</mi></math>, then
+                        </li>
+                        <div class="math-equation">
+                            <math>
+                                <mrow>
+                                    <mi> SMA </mi><mo> = </mo>
+                                    <mfrac>
+                                        <mrow>
+                                            <msub><mi>A</mi><mn>0</mn></msub>
+                                            <mo> + </mo>
+                                            <msub><mi>A</mi><mn>1</mn></msub>
+                                            <mo> + </mo>
+                                            <msub><mi>A</mi><mn>2</mn></msub>
+                                            <mo>...</mo>
+                                            <msub><mi>A</mi><mi>n</mi></msub>
+                                        </mrow>
+                                        <mi>n</mi>
+                                    </mfrac>
+                                </mrow>
+                            </math>
+                        </div>
+                        <li>
+                            <u>Exponential Moving Average (EMA)</u>: Moving average that uses weights
+                            as well as a smoothing factor to give higher weight to more recent prices.
+                            This indicator can be more accurate when there is recent volatility.
+                        </li>
+                        <div class="math-equation">
+                            <math>
+                                <mrow>
+                                    <mi>EMA</mi><mo>=</mo><mo>(</mo>
+                                    <mfrac>
+                                        <mn>2</mn>
+                                        <mrow>
+                                            <mi>n</mi><mo>+</mo><mn>1</mn>
+                                        </mrow>
+                                    </mfrac><mo>)</mo>
+                                    <mo>*</mo>
+                                    <mo>(</mo><mtext>Close</mtext><mo>-</mo><mtext>Previous EMA</mtext><mo>)</mo>
+                                    <mo>+</mo>
+                                    <mtext>Previous EMA</mtext>
+                                </mrow>
+                            </math>
+                        </div>
+                    </ul>
+                    <br>
+                    <li>
+                        <u>Moving Average Convergence Divergence (MACD)</u>: Technical tool used to
+                        discover bullish and bearish signals in the market. Often, the MACD is
+                        displayed with a histogram that graphs the difference between the MACD and
+                        its signal line. This histogram can be used to identify when bullish or
+                        bearish momentum is high.
+                    </li>
+                    <div class="math-equation">
+                        <math>
+                            <mrow>
+                                <mi>MACD</mi><mo>=</mo><mtext>12-Period EMA</mtext><mo>-</mo><mtext>26-Period EMA</mtext>
+                            </mrow>
+                        </math>
+                    </div>
+                    <br>
+                    <li>
+                        <u>Bollinger Bands&reg;</u>: Tool that plots a positive and negative multiple
+                        of the standard deviation away from a moving average of a security's price.
+                        This moving average could be a simple or exponential moving average. This can
+                        be used to help discover when an asset is oversold or overbought.
+                        <ul>
+                            <li>If the price is in the upper end of the bands, it is likely to fall back toward the MA.</li>
+                            <li>If the price is in the lower end of the bands, it is likely to move up toward the MA.</li>
+                        </ul>
+                    </li>
+                    <br>
+                    <li>
+                        <u>Relative Strength Index (RSI)</u>: Oscillator used to analyze an asset to help determine if
+                        the stock is overbought or oversold. The graph ranges from 0 to 100.
+                        <ul>
+                            <li>Over 70 or 80 is considered overbought</li>
+                            <li>Below 20 or 30 is considered oversold</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <!-- end of technical indicators -->
+            <!-- start of fundamental data -->
+            <div class='tab-pane fade' id='fundamental-content' role='tabpanel'>
+                <br>
+                <h3 class=text-center> Fundamental data </h3>
+                <hr>
+                <p>
+                    <u>Fundamental data</u> includes all data that is involved with the value of a stock.
+                    This could include things like cash flow, revenue, profit retention, etc.<br>
+                    <u>Fundamental analysis</u> involves using this data to make decisions on this data.
+                </p>
+                <div>
+                    <h4> Quote Data </h4>
+                    <hr>
+                    <ul>
+                        <li>
+                            <u>Open</u>: The price of a single share of a stock at the beginning of some period.
+                        </li>
+                        <li>
+                            <u>Close</u>: The price of a single share of a stock at the end of some period.
+                        </li>
+                        <li>
+                            <u>High</u>: The greatest price of a single share of a stock in some period.
+                        </li>
+                        <li>
+                            <u>Low</u>: The smallest price of a single share of a stock in some period.
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4> Valuation Metrics </h4>
+                    <hr>
+                    <ul>
+                        <li>
+                            <u>Book Value</u>: Cost of carraying an asset on the company's balance sheet.
+                        </li>
+                        <li>
+                            <u>Trailing P/E</u>: Relative valuation ratio based on the last 12 months of earnings.
+                        </li>
+                        <li>
+                            <u>Forward P/E</u>: Relative valuation ratio estimating the next 12 months of earnings.
+                        </li>
+                        <li>
+                            <u>Price-to-Sales (P/S) Ratio</u>: Compares a company's stock price to its revenue.
+                        </li>
+                        <li>
+                            <u>Price-to-Book (P/B) Ratio</u>: Compares a company's market cap. to its book value.
+                        </li>
+                        <li>
+                            <u>EV to Revenue (EV/R)</u>: Enterprise value-to-revenue multiple. Compares the company's
+                            enterprise value to its revenue.
+                        </li>
+                        <li>
+                            <u>EV to EBITDA (EV/R)</u>: Measure of a company's return on investment.
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Income Data</h4>
+                    <hr>
+                    <ul>
+                        <li>
+                            <u>Revenue</u>: The amount of money a company earns in a specific period. This is before
+                            taxes and expenses are considered.
+                        </li>
+                        <li>
+                            <u>Revenue per share</u>: Revenue divided by the number of outstanding shares.
+                        </li>
+                        <li>
+                            <u>Quarterly Revenue Growth</u>: How much a company's sales increased in one quarter comapred to the previous.
+                        </li>
+                        <li>
+                            <u>Gross Profit</u>: The amount of money made by a company after deducting liabilities.
+                        </li>
+                        <li>
+                            <u>EBITDA</u>: Acronym for: Earnings before Interest, Taxes, Depreciation, and Amortization
+                            Used to measure the company's financial performance.
+                        </li>
+                        <li>
+                            <u>Profit Margin</u>: Ratio to measure a company's ability to make money. For example, if a
+                            business lists a 15% profit margin in the last quarter, its net income is $0.15 per dollar of revenue.
+                        </li>
+                        <li>
+                            <u>Operating Margin</u>: Similar to a profit margin, except it accounts for variable costs like wages or material costs.
+                            Higher ratios are better (because it shows the company can turn sales into profit)
+                        </li>
+                        <li>
+                            <u>Return on Assets (ROA)</u>: Indicator for the profitability of a company relative to its
+                            total assets.
+                            <div class="math-equation">
+                                <math>
+                                    <mrow>
+                                        <mi>ROA</mi><mo>=</mo>
+                                        <mfrac>
+                                            <mi>Net Income</mi>
+                                            <mrow>
+                                                <mi>Total Assets</mi>
+                                            </mrow>
+                                        </mfrac>
+                                    </mrow>
+                                </math>
+                            </div>
+                            The higher the value, the better.
+                        </li>
+                        <li>
+                            <u>Return on Equity (ROE)</u>: Typically used with the ROA, it is the net income divided by the shareholder
+                            equity:
+                            <div class="math-equation">
+                                <math>
+                                    <mrow>
+                                        <mi>ROE</mi><mo>=</mo>
+                                        <mfrac>
+                                            <mi>Net Income</mi>
+                                            <mrow>
+                                                <mi>Shareholder Equity</mi>
+                                            </mrow>
+                                        </mfrac>
+                                    </mrow>
+                                </math>
+                            </div>
+                            It is expressed as a percentage, and should be calculated if net income & equity are both positive.
+                            This value should be compared to similar companies to judge its performance in the sector.
+                        </li>
+                        <li>
+                            <u>Earnings-per-share (EPS)</u>: A value that is the company's profit divided by the
+                            number of outstanding shares of its common stock. This can be used to measure the
+                            company's profitability. A strong earnings can mean the stock will grow, while a weak
+                            earnings or even a loss can indicate the stock price may fall.
+                        </li>
+                        <li>
+                            <u>Diluted EPS</u>: Calculation used to assess a company's EPS assuming all convertible
+                            securities were exercised. Typically lower than the standard EPS.
+                        </li>
+                        <li>
+                            <u>Quarterly Earnings Growths</u>: How much a company's earnings increased in one quarter comapred to the previous.
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4> Trading Information</h4>
+                    <hr>
+                    <ul>
+                        <li>
+                            <u>Market Cap</u> (sometimes, <u>market value</u>): The open market valuation of the company.
+                            It is the value of the asset with regards to the marketplace.
+                        </li>
+                        <li>
+                            <u>P/E ratio</u>: Price-to-earnings ratio. This is used to value a company by measuring
+                            its current share price relative to its per-share earnings (EPS)
+                        </li>
+                        <li>
+                            <u>PEG ratio</u>: Price/earnings to growth ratio. Used to assess a company's value and
+                            factor in its expected earning's growth.
+                        </li>
+                        <li>
+                            <u>Beta</u>: Measures the volatility of a security compared to the market.
+                            Can be used to show if a stock moves in the same direction as the market or not. <br>
+                            A value...
+                            <ul>
+                                <li>Equal to 1.0 implies the stock is strongly correlated with the market. <br></li>
+                                <li>Less than 1.0 implies the stock is (supposedly) less volatile compared to the market. This implies lowered systematic risk. <br></li>
+                                <li>Greater than 1.0 implies the stock is (supposedly) more volatile compared to the market. This implies higher systematic risk.</li>
+                            </ul>
+                        </li>
+                        <li>
+                            <u>52-week high</u>: The highest recorded price in a 52 week period.
+                        </li>
+                        <li>
+                            <u>52-week low</u>: The lowest recorded price in a 52 week period.
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4> Dividend & Split information </h4>
+                    <hr>
+                    <ul>
+                        <li>
+                            <u>Dividend per share</u>: Sum of declared dividends for every outstanding share.
+                        </li>
+                        <li>
+                            <u>Dividend yield</u>: Ratio of dividend to price, showing how much a company pays
+                            out in dividends relative to its stock price (annually).
+                        </li>
+                        <li>
+                            <u>Forward Annual Dividend Rate</u>: Estimation of the dividend rate.
+                        </li>
+                        <li>
+                            <u>Forward Annual Dividend Yield</u>: Estimation of the annual dividend expressed as a percentage of
+                            the current stock price.
+                        </li>
+                        <li>
+                            <u>Payout ratio</u>: Ratio of the total amount of dividends paid relative to the company's net income.
+                        </li>
+                        <li>
+                            <u>Dividend date</u>: When the dividend is due to be paid.
+                        </li>
+                        <li>
+                            <u>Ex-Dividend date</u>: Date on or after which a security is traded without a previously declared divided/distribution.
+                        </li>
+                        <li>
+                            <u>Last split factor</u>: The ratio of the most recent stock split. For instance, a factor of 5:1 means that the number of shares
+                            increased by a factor of 5. Consequently, the stock price decreased by a factor of 5.
+                        </li>
+                        <li>
+                            <u>Last split date</u>: When the most recent stock split occurred.
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Share Statistics</h4>
+                    <hr>
+                    <ul>
+                        <li>
+                            <u>Shares Outstanding</u>: Total number of shares issued and actively held by stockholders.
+                            This includes insiders and outsiders.
+                        </li>
+                        <li>
+                            <u>Shares Float</u>: Similar to the shares outstanding, except it excludes shares held by insiders or 
+                            controlling investors.
+                        </li>
+                        <li>
+                            <u>Shares Short</u>: Approximate number of shares in short positions. Short positions occur when
+                            a trader sells a security with the intention of rebuying it, or covering it later at a lower price.
+                        </li>
+                        <li>
+                            <u>Shares Short prior month</u>: The amount of shares short from the previous month.
+                        </li>
+                        <li>
+                            <u>Short ratio</u>: Ratio used to determine if a stock is heavily shorted or not. Calculated as the ratio
+                            between the shares short and the stock's average daily volume.
+                        </li>
+                        <li>
+                            <u>% Insiders</u>: Percent of shares owned by insiders at a company. Insiders are people
+                            (typically managers, owners, founders, etc.) that own stock in the company.
+                            Used as how management views the company. A higher percentage is good, as it implies management believes
+                            the future outlook is good.<br>
+                            Calculated as the ratio of the shares owned by insiders to the shares outstanding.
+                        </li>
+                        <li>
+                            <u>% Institutions</u>: Percent of shares owned by large institutions (banks). Similar to % insiders,
+                            a higher percentage is good, implying large institutions believe the future outlook is good.
+                        </li>
+                    </ul>
+                </div>
+                <p>Some of this information is from <a class="inline-link" href="https://www.investopedia.com/">Investopedia</a></p>
+            </div>
+            <!-- end of fundamental data -->
+            <!-- start of stockpicker information -->
+            <div class='tab-pane fade' id='picker-content' role='tabpanel'>
+                <br>
+                <p>
+                    This site's StockPicker is a tool of our own design to decide if a stock
+                    is a strong buy, weak buy, weak sell, strong sell, or neutral if a
+                    conclusion cannot be made.
+                </p>
+                <p>
+                    The StockPicker takes into account several different properties
+                    of a single stock, focusing primarily on its technical data.
+                </p>
+                <p> Technical data considered: </p>
+                <ul>
+                    <li>
+                        RSI overbought/oversold signals -- The system uses 70/30 for indicators. 
+                        The more time the stock resides in a zone, the more impact it has on the 
+                        StockPicker's index
+                    </li>
+                    <li>
+                        MACD signals -- The system focuses on crossover events
+                    </li>
+                    <li>
+                        Trends of a stock (over the lifetime of a stock) -- The more a stock 
+                        spends on an uptrend, the higher the score. Of course, the more a stock 
+                        spends on a downtrend, the lower the score.
+                    </li>
+                </ul>
+            </div>
+            <!-- end of stockpicker information -->
+        </div>
+    </div>
+    <!-- end of info-container -->
+
+    <!-- start of bottom padding -->
+    <div class="bottom-pad"> </div>
+    <!-- end of bottom padding -->
+
+    <!-- scripts -->
+    <script src="/js/master.js"></script>
+    <script src="/js/linker.js"></script>
+    <script src="/js/navbar.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"></script>
+</body>
+
+</html>
+{{ end }}

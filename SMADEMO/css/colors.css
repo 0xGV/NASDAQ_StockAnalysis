@@ -1,0 +1,82 @@
+/**
+ * ============================================================================
+ * colors.css -- This handles the colors for the webpage.
+ * ============================================================================
+**/
+
+/* keep fonts the same */
+body {
+    font-family: Oxygen, Kanit, Cambria, Arial, Times, sans-serif;
+}
+
+/* accent background color */
+.bg-main {
+    background-color: rgb(7.5, 9.0, 13.3);
+    color: whitesmoke;
+}
+
+/* circle color */
+.bg-circle {
+    background-color: rgb(20, 21, 29);
+    color: whitesmoke;
+}
+
+/* info containers background */
+/* the !important is needed to override bootstrap */
+.bg-info {
+    background-color: rgb(30, 32, 43)  !important;
+    color: whitesmoke  !important;
+}
+
+/* nav colors */
+.bg-nav {
+    background-color: rgb(23, 23, 31);
+    color: whitesmoke;
+}
+
+/* handle links */
+.nav-link:link {
+    color: whitesmoke;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.nav-link:hover {
+    color: whitesmoke !important;
+    background-color: rgb(38, 122, 231) !important;
+    text-decoration: none;
+}
+
+.text-color {
+    color: whitesmoke;
+}
+
+.btn-outline-sma {
+    color: rgb(38, 122, 231);
+    border-color: rgb(38, 122, 231);
+}
+
+.btn-outline-sma:hover {
+    color: whitesmoke;
+    background-color: rgb(38, 122, 231);
+    border-color: rgb(38, 122, 231);
+}
+
+.btn-check:checked + .btn-outline-sma {
+    color: whitesmoke;
+    background-color: rgb(38, 122, 231);
+    border-color: rgb(38, 122, 231);
+}
+
+/* handle links */
+.inline-link:link {
+    color: rgb(38, 122, 231) !important;
+    background-color: transparent !important;
+    text-decoration: underline !important;
+}
+
+.inline-link:hover {
+    color: whitesmoke !important;
+    background-color: rgb(38, 122, 231) !important;
+    text-decoration: none;
+}

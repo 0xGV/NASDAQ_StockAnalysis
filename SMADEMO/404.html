@@ -1,0 +1,53 @@
+{{ define "404" }}
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <title>404 - Stock Market Analyzer</title>
+    <script src='https://d3js.org/d3.v4.min.js'></script>
+    <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css' rel='stylesheet'
+        integrity='sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC' crossorigin='anonymous'>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Oxygen">
+    <link rel='stylesheet' href='/css/colors.css'>
+    <link rel='stylesheet' href='/css/info.css'>
+</head>
+
+<body class='bg-main extend' onload="load404()">
+    <div id='navbar-parent'></div>
+
+    <!-- start of info-container -->
+    <div class='container bg-info info-container'>
+        <div>
+            <h1 class='text-center'>404: Page not found!</h1>
+            <hr>
+            <h3 class = 'text-center'>
+                Despite the dev team's best efforts, you wound up here.
+            </h3>
+            <p>
+                <p id='did-you-mean-parent'></p>
+                <ul class="row" id="did-you-mean"></ul>
+            </p>
+            <br>
+            <img class='error' src='/404error.png' alt='404 error!'>
+            <br>
+            <p class='text-center'>
+                <i>Please note that this project only manages NASDAQ stocks. Searching for stocks on NYSE or other exchanges will redirect you here.</i>
+            </p>
+        </div>
+    </div>
+    <!-- end of info-container -->
+
+    <!-- scripts -->
+    <script>
+        didyoumean = {{ .didYouMean }}
+    </script>
+    <script src='/js/404.js'></script>
+    <script src='/js/navbar.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js'></script>
+</body>
+
+</html>
+{{ end }}
